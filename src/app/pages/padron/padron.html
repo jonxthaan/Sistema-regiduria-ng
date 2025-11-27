@@ -1,0 +1,114 @@
+<!-- Encabezado de la página -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Gestión de Escuelas</h1>
+    <!-- Botón para abrir el modal -->
+    <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAgregarEscuela">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Nueva Escuela
+    </button>
+</div>
+
+<!-- Tarjeta de la Tabla de Padrón -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Padrón de Instituciones Registradas</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>CCT</th>
+                        <th>Nombre Escuela</th>
+                        <th>Nivel</th>
+                        <th>Director</th>
+                        <th>Contraseña</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <!-- El <tfoot> se incluye a menudo en plantillas Bootstrap/SB Admin 2 -->
+                <tfoot>
+                    <tr>
+                        <th>CCT</th>
+                        <th>Nombre Escuela</th>
+                        <th>Nivel</th>
+                        <th>Director</th>
+                        <th>Contraseña</th>
+                        <th>Acciones</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr>
+                        <td>20DPR1055X</td>
+                        <td>Esc. Primaria Benito Juárez</td>
+                        <td><span class="badge badge-danger">Primaria</span></td>
+                        <td>Prof. Juan Pérez</td>
+                        <td>*******</td>
+                        <td>
+                            <!-- Botón Editar: Se añade aria-label para accesibilidad (AXE) -->
+                            <button class="btn btn-warning btn-sm btn-circle mr-1" aria-label="Editar Escuela"><i class="fas fa-pen"></i></button>
+                            <!-- Botón Eliminar: Se añade aria-label para accesibilidad (AXE) -->
+                            <button class="btn btn-danger btn-sm btn-circle" aria-label="Eliminar Escuela"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>20DJN0234Y</td>
+                        <td>Jardín de Niños Luz y Saber</td>
+                        <td><span class="badge badge-primary">Preescolar</span></td>
+                        <td>Lic. María González</td>
+                        <td>*******</td>
+                        <td>
+                            <!-- Botón Editar: Se añade aria-label para accesibilidad (AXE) -->
+                            <button class="btn btn-warning btn-sm btn-circle mr-1" aria-label="Editar Escuela"><i class="fas fa-pen"></i></button>
+                            <!-- Botón Eliminar: Se añade aria-label para accesibilidad (AXE) -->
+                            <button class="btn btn-danger btn-sm btn-circle" aria-label="Eliminar Escuela"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Registrar Nueva Escuela -->
+<div class="modal fade" id="modalAgregarEscuela" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Nueva Escuela</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nivelEducativo">Nivel Educativo</label>
+                        <select class="form-control" id="nivelEducativo">
+                            <option>Preescolar</option>
+                            <option>Primaria</option>
+                            <option>Secundaria</option>
+                            <option>Medio Superior</option>
+                            <option>Superior</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cctClave">Clave CCT (Usuario)</label>
+                        <input type="text" class="form-control" id="cctClave" placeholder="Ej. 20DPR....">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombreInstitucion">Nombre de la Institución</label>
+                        <input type="text" class="form-control" id="nombreInstitucion" placeholder="Nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="directorResponsable">Director Responsable</label>
+                        <input type="text" class="form-control" id="directorResponsable" placeholder="Nombre del Director">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" type="button">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,65 +1,61 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-flag"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Regiduría <sup>Edu</sup></div>
-            </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Inicio</span></a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">
-                Gestión
+    <li class="nav-item">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-flag"></i>
             </div>
+            <div class="sidebar-brand-text mx-3">Regiduría <sup>Edu</sup></div>
+        </a>
+    </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="padron_escuelas.html">
-                    <i class="fas fa-fw fa-school"></i>
-                    <span>Padrón de Escuelas</span></a>
-            </li>
+    <hr class="sidebar-divider my-0">
 
-            <li class="nav-item">
-                <a class="nav-link" href="crear_convocatoria.html">
-                    <i class="fas fa-fw fa-bullhorn"></i>
-                    <span>Convocatorias</span></a>
-            </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLink="/">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Inicio</span>
+        </a>
+    </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="mapa_logistica.html">
-                    <i class="fas fa-fw fa-map-marked-alt"></i>
-                    <span>Mapa Logístico</span></a>
-            </li>
+    <hr class="sidebar-divider">
 
-            <li class="nav-item">
-                <a class="nav-link" href="monitoreo_asistencia.html">
-                    <i class="fas fa-fw fa-clipboard-check"></i>
-                    <span>Monitoreo Asistencia</span></a>
-            </li>
+    <div class="sidebar-heading">
+        Gestión
+    </div>
 
-            <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link" routerLink="/padron">
+            <i class="fas fa-fw fa-school"></i>
+            <span>Padrón de Escuelas</span>
+        </a>
+    </li>
 
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-bullhorn"></i>
+            <span>Convocatorias</span>
+        </a>
+    </li>
 
-        </ul>
-        <div id="content-wrapper" class="d-flex flex-column">
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-map-marked-alt"></i>
+            <span>Mapa Logístico</span>
+        </a>
+    </li>
 
-            <div id="content">
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-clipboard-check"></i>
+            <span>Monitoreo Asistencia</span>
+        </a>
+    </li>
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <hr class="sidebar-divider d-none d-md-block">
 
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+    <li class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle" aria-label="Minimizar"></button>
+    </li>
 
-                    <ul class="navbar-nav ml-auto">
+</ul>
