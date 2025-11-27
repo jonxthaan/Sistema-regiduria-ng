@@ -1,19 +1,23 @@
-<div id="wrapper">
+@if (showSidebar) {
+  <div id="wrapper">
+    <app-sidebar></app-sidebar>
 
-  <app-sidebar></app-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <app-topbar></app-topbar>
 
-  <div id="content-wrapper" class="d-flex flex-column">
-    <div id="content">
+        <div class="container-fluid">
+          <router-outlet></router-outlet>
+        </div>
 
-      <app-topbar></app-topbar>
-
-      <div class="container-fluid">
-        <router-outlet></router-outlet>
       </div>
-
+      <app-footer></app-footer>
     </div>
-
-    <app-footer></app-footer>
-
   </div>
-</div>
+}
+
+@if (!showSidebar) {
+  <div class="bg-gradient-primary" style="min-height: 100vh;">
+     <router-outlet></router-outlet>
+  </div>
+}
