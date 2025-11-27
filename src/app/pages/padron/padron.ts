@@ -35,6 +35,8 @@ export class Padron {
       error: (e) => console.error('Error al cargar:', e)
     });
   }
+
+
   getNombreNivel(id: number): string {
     const mapa: any = { 1: 'Preescolar', 2: 'Primaria', 3: 'Secundaria', 4: 'Medio Superior', 5: 'Superior' };
     return mapa[id] || 'Desconocido';
