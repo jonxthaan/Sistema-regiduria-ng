@@ -3,26 +3,23 @@
 </div>
 
 <div class="row">
-
     <div class="col-lg-8">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Detalles del Evento</h6>
             </div>
             <div class="card-body">
-                <form>
+                <form (ngSubmit)="crear()">
                     <div class="form-row">
                         <div class="form-group col-md-8">
                             <label class="small mb-1 font-weight-bold">Título de la Convocatoria</label>
-                            <input type="text" class="form-control" placeholder="Ej. Desfile Conmemorativo 20 de Noviembre">
+                            <input type="text" class="form-control" [(ngModel)]="nuevaConvocatoria.titulo" name="titulo" placeholder="Ej. Desfile 20 Nov">
                         </div>
                         <div class="form-group col-md-4">
                             <label class="small mb-1 font-weight-bold">Tipo de Evento</label>
-                            <select class="form-control">
+                            <select class="form-control" name="tipo">
                                 <option selected>Desfile</option>
                                 <option>Acto Cívico</option>
-                                <option>Reunión de Directores</option>
-                                <option>Otro</option>
                             </select>
                         </div>
                     </div>
@@ -30,34 +27,24 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="small mb-1 font-weight-bold">Fecha del Evento</label>
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" [(ngModel)]="nuevaConvocatoria.fechaEvento" name="fecha">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="small mb-1 font-weight-bold">Hora de Reunión</label>
-                            <input type="time" class="form-control">
-                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                         <label class="small mb-1 font-weight-bold">Hora de Reunión</label>
+                         <input type="time" class="form-control" 
+                         [(ngModel)]="nuevaConvocatoria.horaReunion" name="horaReunion" required>
                     </div>
 
                     <div class="form-group">
                         <label class="small mb-1 font-weight-bold">Descripción y Logística</label>
-                        <textarea class="form-control" rows="4" placeholder="Indique el punto de reunión, código de vestimenta, etc."></textarea>
+                        <textarea class="form-control" rows="4" [(ngModel)]="nuevaConvocatoria.descripcion" name="descripcion"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label class="small mb-1 font-weight-bold">Documento Oficial (PDF)</label>
-                        <input type="file" class="form-control-file">
-                        <small class="text-muted">Suba la convocatoria firmada o el croquis.</small>
-                    </div>
-
-                    <hr>
-
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="checkAviso" checked>
-                            <label class="custom-control-label text-primary font-weight-bold" for="checkAviso">
-                                <i class="fas fa-bell mr-1"></i> Enviar aviso inmediato a todas las escuelas
-                            </label>
-                        </div>
+                        <input type="file" class="form-control-file" (change)="onFileSelected($event)">
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
@@ -68,46 +55,20 @@
         </div>
     </div>
 
-    <div class="col-lg-4">
+    <div class="card-body">
+    <div *ngFor="let conv of listaConvocatorias" class="mb-4">
+        <div class="small text-gray-500">Fecha: {{ conv.fechaEvento }}</div>
         
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Convocatorias Activas</h6>
-            </div>
-            <div class="card-body">
-                <div class="mb-4">
-                    <div class="small text-gray-500">Publicado: 10 Nov, 2025</div>
-                    <span class="font-weight-bold d-block">Reunión de Planeación</span>
-                    <div class="progress mt-2" style="height: 5px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"></div>
-                    </div>
-                    <div class="small text-right mt-1 text-success font-weight-bold">Finalizado</div>
-                </div>
-                
-                <hr>
-
-                <div class="mb-2">
-                    <div class="small text-gray-500">Publicado: 25 Oct, 2025</div>
-                    <span class="font-weight-bold d-block">Entrega de Documentación</span>
-                    <div class="progress mt-2" style="height: 5px;">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 60%"></div>
-                    </div>
-                    <div class="small text-right mt-1 text-warning font-weight-bold">En curso</div>
-                </div>
-            </div>
+        <span class="font-weight-bold d-block">{{ conv.titulo }}</span>
+        
+        <div class="progress mt-2" style="height: 5px;">
+            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%"></div>
         </div>
-
-        <div class="card shadow mb-4 border-left-info">
-            <div class="card-body">
-                <div class="text-center mb-2">
-                    <img class="img-fluid" style="width: 10rem;" src="assets/img/undraw_posting_photo.svg" alt="">
-                </div>
-                <p class="mb-0 small">
-                    <strong>Nota:</strong> Al crear una convocatoria de tipo "Desfile", el sistema habilitará automáticamente el módulo de registro para los directores.
-                </p>
-            </div>
-        </div>
-
+        <hr>
     </div>
-
+    
+    <div *ngIf="listaConvocatorias.length === 0" class="text-center text-muted">
+        No hay convocatorias activas.
+    </div>
+</div>
 </div>

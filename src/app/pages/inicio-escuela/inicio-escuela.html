@@ -1,85 +1,70 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Bienvenido, Director(a)</h1>
-    <span class="d-none d-sm-inline-block badge badge-primary p-2 shadow-sm">
-        <i class="fas fa-calendar-alt mr-1"></i> Ciclo Escolar 2025-2026
-    </span>
-</div>
-
-<div class="card shadow mb-4 border-bottom-warning">
-    <div class="card-header py-3 bg-warning d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-white">
-            <i class="fas fa-bullhorn mr-2"></i> Avisos Importantes de la Regiduría
-        </h6>
-    </div>
-    <div class="card-body bg-light">
-        <div class="alert alert-white border-left-warning shadow-sm" role="alert">
-            <h5 class="alert-heading font-weight-bold text-warning">
-                <i class="fas fa-exclamation-circle"></i> Cambio de Ruta - Desfile 20 Nov
-            </h5>
-            <p class="mb-1">Se les informa que el punto de reunión ha cambiado al <strong>Parque Central</strong>. La hora de inicio se mantiene a las 8:00 AM.</p>
-            <hr>
-            <p class="mb-0 small text-gray-500">Publicado: Hoy a las 9:00 AM</p>
-        </div>
-
-        <div class="alert alert-white border-left-info shadow-sm mb-0" role="alert">
-            <h6 class="font-weight-bold text-info">📅 Fecha Límite de Registro</h6>
-            <p class="mb-0">Recuerden que la plataforma para registrar contingentes cierra el <strong>15 de Noviembre</strong>.</p>
-        </div>
-    </div>
+    <h1 class="h3 mb-0 text-gray-800">Panel del Director</h1>
 </div>
 
 <div class="row">
 
     <div class="col-lg-6 mb-4">
-        <div class="card shadow h-100">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Próximo Evento</h6>
-                <span class="badge badge-success">Inscripciones Abiertas</span>
+        <div class="card shadow mb-4 border-left-primary">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Bienvenido al Sistema</h6>
             </div>
-            <div class="card-body text-center">
-                <div class="mb-4">
-                    <i class="fas fa-flag-checkered fa-4x text-gray-300 mb-3"></i>
-                    <h4 class="font-weight-bold text-gray-800">Desfile 20 de Noviembre</h4>
-                    <p class="text-muted">Convocatoria para niveles Preescolar, Primaria, Secundaria y Superior.</p>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 15rem;"
+                         src="assets/img/undraw_profile.svg" alt="...">
                 </div>
+                <h4>Hola, <span class="text-primary">{{ usuario?.nombreDirector || 'Director' }}</span></h4>
+                <p>Usted está gestionando la cuenta de: <strong>{{ usuario?.nombreEscuela }}</strong></p>
+                <hr>
+                <p class="small text-muted">Desde aquí podrá gestionar la participación de su institución en los eventos municipales.</p>
                 
-                <div class="alert alert-danger" role="alert">
-                    <i class="fas fa-times-circle mr-1"></i> Su escuela <strong>NO</strong> ha registrado participación.
-                </div>
-
-                <button class="btn btn-primary btn-lg btn-block pulse-button" routerLink="/registro-participacion">
-                     <i class="fas fa-edit mr-2"></i> Registrar Mi Escuela Ahora
-                </button>
+                <a routerLink="/registro-participacion" class="btn btn-primary btn-block">
+                    <i class="fas fa-clipboard-list mr-2"></i> Inscribir a Nuevo Evento
+                </a>
             </div>
         </div>
     </div>
 
     <div class="col-lg-6 mb-4">
-        <div class="card shadow h-100">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Mis Datos Institucionales</h6>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Convocatorias Abiertas</h6>
+                <i class="fas fa-bullhorn text-gray-300"></i>
             </div>
             <div class="card-body">
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold text-gray-800">Institución:</div>
-                    <div class="col-8">Esc. Primaria "Benito Juárez"</div>
+                
+                <div *ngFor="let c of convocatorias" class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="font-weight-bold text-dark">{{ c.titulo }}</span>
+                        <span class="badge badge-success px-2">Activo</span>
+                    </div>
+                    <div class="small text-gray-500 mb-1">
+                        <i class="fas fa-calendar-alt mr-1"></i> {{ c.fechaEvento }} 
+                        <i class="fas fa-clock ml-2 mr-1"></i> {{ c.horaReunion }}
+                    </div>
+                    <p class="small mb-2">{{ c.descripcion }}</p>
+                    
+                    <a routerLink="/registro-participacion" class="btn btn-sm btn-outline-primary">
+                        Participar
+                    </a>
+                    <hr>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold text-gray-800">CCT:</div>
-                    <div class="col-8">20DPR1055X</div>
+
+                <div *ngIf="convocatorias.length === 0" class="text-center py-4">
+                    <i class="fas fa-check-circle fa-3x text-gray-300 mb-3"></i>
+                    <p class="text-gray-500">No hay convocatorias activas por el momento.</p>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold text-gray-800">Nivel:</div>
-                    <div class="col-8"><span class="badge badge-danger">Primaria</span></div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-4 font-weight-bold text-gray-800">Director:</div>
-                    <div class="col-8">Prof. Juan Pérez</div>
-                </div>
-                <hr>
-                <a href="#" class="small text-primary font-weight-bold">
-                    <i class="fas fa-history mr-1"></i> Ver historial de participaciones
-                </a>
+
+            </div>
+        </div>
+
+        <div class="card shadow mb-4 border-bottom-warning">
+            <div class="card-body">
+                <h6 class="font-weight-bold text-warning">Recordatorio Importante</h6>
+                <p class="small mb-0">
+                    Recuerde descargar el croquis del desfile y confirmar el número exacto de alumnos al menos 3 días antes del evento.
+                </p>
             </div>
         </div>
     </div>

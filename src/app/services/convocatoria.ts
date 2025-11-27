@@ -9,13 +9,12 @@ export class ConvocatoriaService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/api/convocatorias';
 
-  // Obtener convocatorias activas
   getConvocatorias(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  // Crear una nueva convocatoria (con archivo opcional)
-  crearConvocatoria(datos: FormData): Observable<any> {
+  // CAMBIO: Recibe 'any' (objeto simple) en vez de FormData
+  crearConvocatoria(datos: any): Observable<any> {
     return this.http.post(this.apiUrl, datos);
   }
 }

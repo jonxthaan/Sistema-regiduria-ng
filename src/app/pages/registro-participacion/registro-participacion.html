@@ -1,5 +1,5 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Inscripción al Desfile: 20 de Noviembre</h1>
+    <h1 class="h3 mb-0 text-gray-800">Inscripción a Evento</h1>
 </div>
 
 <div class="row">
@@ -10,41 +10,58 @@
                 <h6 class="m-0 font-weight-bold text-primary">Datos del Contingente Escolar</h6>
             </div>
             <div class="card-body">
-                <form>
+                <form (ngSubmit)="registrar()">
+                    
                     <div class="form-group">
-                        <label class="font-weight-bold">Director Responsable:</label>
-                        <input type="text" class="form-control bg-light" value="Prof. Juan Pérez" readonly>
-                        <small class="text-muted">Dato tomado de su perfil de usuario.</small>
+                        <label class="font-weight-bold">Escuela Participante:</label>
+                        <input type="text" class="form-control bg-light" 
+                               [value]="usuario?.nombreEscuela || 'No identificado'" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label class="font-weight-bold">Maestros Acompañantes:</label>
-                        <textarea class="form-control" rows="3" placeholder="Escriba los nombres de los docentes a cargo..."></textarea>
+                        <label class="font-weight-bold text-primary">Seleccione Convocatoria: *</label>
+                        <select class="form-control" [(ngModel)]="registro.convocatoriaId" name="convocatoriaId" required>
+                            <option value="">-- Seleccione un evento --</option>
+                            <option *ngFor="let c of listaConvocatorias" [value]="c.id">
+                                {{ c.titulo }} ({{ c.fechaEvento }})
+                            </option>
+                        </select>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="font-weight-bold">Número de Grupos:</label>
-                            <input type="number" class="form-control" placeholder="Ej. 3">
+                            <label class="font-weight-bold">Total de Alumnos: *</label>
+                            <input type="number" class="form-control" 
+                                   [(ngModel)]="registro.cantidadAlumnos" name="cantidadAlumnos" 
+                                   placeholder="Ej. 50" required>
+                            <small class="text-muted">Cuente alumnos, banda de guerra y escolta.</small>
                         </div>
+                        
                         <div class="form-group col-md-6">
-                            <label class="font-weight-bold text-primary">Total de Alumnos:</label>
-                            <input type="number" class="form-control border-left-primary" placeholder="Ej. 120">
-                            <small class="text-danger font-weight-bold">Este dato definirá el tamaño de su bloque.</small>
+                            <label class="font-weight-bold">Comentarios / Necesidades:</label>
+                            <input type="text" class="form-control" 
+                                   [(ngModel)]="registro.comentarios" name="comentarios" 
+                                   placeholder="Ej. Llevamos sonido propio">
                         </div>
                     </div>
 
                     <hr>
 
                     <div class="form-group">
-                        <label class="font-weight-bold">Reseña Histórica (Opcional)</label>
-                        <input type="file" class="form-control-file">
-                        <small class="text-muted">Documento para el maestro de ceremonias.</small>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="checkConfirm" 
+                                   [(ngModel)]="registro.confirmarAsistencia" name="confirmarAsistencia" required>
+                            <label class="custom-control-label" for="checkConfirm">
+                                Declaro que los datos son reales y confirmo nuestra asistencia.
+                            </label>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success btn-lg btn-block mt-4">
+                    <button type="submit" class="btn btn-success btn-lg btn-block mt-4" 
+                            [disabled]="!registro.confirmarAsistencia || !registro.convocatoriaId">
                         <i class="fas fa-check-circle mr-2"></i> Confirmar y Enviar Registro
                     </button>
+
                 </form>
             </div>
         </div>
@@ -53,18 +70,15 @@
     <div class="col-lg-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Resumen de Participación</h6>
+                <h6 class="m-0 font-weight-bold text-secondary">Instrucciones</h6>
             </div>
-            <div class="card-body text-center">
-                <div class="mb-3">
-                    <img class="img-fluid" style="width: 150px;" src="assets/img/undraw_posting_photo.svg" alt="Status">
-                </div>
-                <p class="mb-2">Su escuela está clasificada como:</p>
-                <h4 class="font-weight-bold text-gray-800">Nivel Primaria</h4>
+            <div class="card-body">
+                <p>1. Seleccione el evento al que desea asistir.</p>
+                <p>2. Indique el número aproximado de alumnos.</p>
+                <p>3. En "Comentarios" puede indicar si lleva banda de guerra o banderines extra.</p>
                 <hr>
-                <div class="text-left small">
-                    <p><i class="fas fa-info-circle text-info mr-1"></i> <strong>Bloque:</strong> Se le notificará su posición y color 24hrs antes del evento.</p>
-                    <p><i class="fas fa-clock text-warning mr-1"></i> <strong>Cierre:</strong> 15 Noviembre</p>
+                <div class="text-center">
+                    <i class="fas fa-school fa-3x text-gray-300"></i>
                 </div>
             </div>
         </div>

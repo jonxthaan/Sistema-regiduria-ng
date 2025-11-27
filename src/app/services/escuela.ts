@@ -19,6 +19,11 @@ export class EscuelaService {
     return this.http.post(this.apiUrl, escuela);
   }
 
+  // ACTUALIZAR escuela (Nuevo)
+  editarEscuela(id: number, escuela: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, escuela);
+  }
+
   // Eliminar escuela
   eliminarEscuela(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);

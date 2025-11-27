@@ -11,69 +11,51 @@
 
     <hr class="sidebar-divider my-0">
 
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Inicio</span>
-        </a>
-    </li>
+    <div *ngIf="esAdmin()">
+        <div class="sidebar-heading mt-3">
+            Gestión
+        </div>
 
-    <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/padron">
+                <i class="fas fa-fw fa-school"></i>
+                <span>Padrón de Escuelas</span>
+            </a>
+        </li>
 
-    <div class="sidebar-heading">
-        Gestión
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/convocatorias">
+                <i class="fas fa-fw fa-bullhorn"></i>
+                <span>Convocatorias</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/monitoreo">
+                <i class="fas fa-fw fa-video"></i>
+                <span>Monitoreo en Vivo</span>
+            </a>
+        </li>
     </div>
 
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/padron">
-            <i class="fas fa-fw fa-school"></i>
-            <span>Padrón de Escuelas</span>
-        </a>
-    </li>
+    <div *ngIf="esEscuela()">
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+            Vista Escuela
+        </div>
 
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/convocatorias">
-            <i class="fas fa-fw fa-bullhorn"></i>
-            <span>Convocatorias</span>
-        </a>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/inicio-escuela" routerLinkActive="active">
+                <i class="fas fa-fw fa-user-graduate"></i>
+                <span>Panel Director</span>
+            </a>
+        </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            <i class="fas fa-fw fa-map-marked-alt"></i>
-            <span>Mapa Logístico</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/monitoreo">
-            <i class="fas fa-fw fa-video"></i>
-            <span>Monitoreo en Vivo</span>
-        </a>
-
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <li class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle" aria-label="Minimizar"></button>
-    </li>
- 
-    <hr class="sidebar-divider">
-
-    <div class="sidebar-heading">
-        Vista Escuela
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/registro-participacion" routerLinkActive="active">
+                <i class="fas fa-fw fa-edit"></i>
+                <span>Registro Participación</span>
+            </a>
+        </li>
     </div>
-
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/inicio-escuela" routerLinkActive="active">
-            <i class="fas fa-fw fa-user-graduate"></i>
-            <span>Panel Director</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-    <a class="nav-link" routerLink="/registro-participacion" routerLinkActive="active">
-        <i class="fas fa-fw fa-edit"></i>
-        <span>Registro Participación</span>
-    </a>
-</li>
-
 </ul>

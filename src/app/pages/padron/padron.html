@@ -1,122 +1,123 @@
-<!-- Encabezado de la página -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Gestión de Escuelas</h1>
-    <!-- Botón para abrir el modal -->
-    <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAgregarEscuela">
+    <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" 
+            data-toggle="modal" data-target="#modalAgregarEscuela" 
+            (click)="abrirModalCrear()">
         <i class="fas fa-plus fa-sm text-white-50"></i> Nueva Escuela
     </button>
 </div>
 
-<!-- Tarjeta de la Tabla de Padrón -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Padrón de Instituciones Registradas</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Padrón de Instituciones</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>CCT</th>
+                        <th>CCT / Usuario</th>
                         <th>Nombre Escuela</th>
                         <th>Nivel</th>
                         <th>Director</th>
-                        <th>Contraseña</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-    <tr *ngFor="let escuela of listaEscuelas">
-        <!-- Java manda 'cctUsuario', no 'cct' -->
-        <td>{{ escuela.cctUsuario }}</td>
-        
-        <td>{{ escuela.nombreEscuela }}</td>
-        
-        <td>
-            <!-- Usamos la función helper para convertir el número en texto -->
-            <span class="badge"
-                  [class.badge-primary]="escuela.nivelId === 1"
-                  [class.badge-danger]="escuela.nivelId === 2"
-                  [class.badge-success]="escuela.nivelId === 3"
-                  [class.badge-info]="escuela.nivelId === 4"
-                  [class.badge-warning]="escuela.nivelId === 5">
-                {{ getNombreNivel(escuela.nivelId) }}
-            </span>
-        </td>
-        
-        <!-- Java manda 'nombreDirector', no 'director' -->
-        <td>{{ escuela.nombreDirector }}</td>
-        
-        <td>*******</td>
-        
-        <td>
-            <button class="btn btn-warning btn-sm btn-circle mr-1" title="Editar">
-                <i class="fas fa-pen"></i>
-            </button>
-            <button class="btn btn-danger btn-sm btn-circle" title="Eliminar">
-                <i class="fas fa-trash"></i>
-            </button>
-        </td>
-    </tr>
+                    <tr *ngFor="let escuela of listaEscuelas">
+                        <td>{{ escuela.cctUsuario }}</td>
+                        <td>{{ escuela.nombreEscuela }}</td>
+                        
+                        <td>
+                            <span class="badge badge-pill px-3"
+                                [class.badge-primary]="escuela.nivelEducativo?.id === 1"
+                                [class.badge-danger]="escuela.nivelEducativo?.id === 2"
+                                [class.badge-success]="escuela.nivelEducativo?.id === 3"
+                                [class.badge-info]="escuela.nivelEducativo?.id === 4"
+                                [class.badge-warning]="escuela.nivelEducativo?.id === 5"
+                                [class.badge-secondary]="!escuela.nivelEducativo">
+                                
+                                {{ escuela.nivelEducativo?.nombre || 'Sin Asignar' }}
+                            </span>
+                        </td>
 
-    <!-- Mensaje vacío -->
-    <tr *ngIf="listaEscuelas.length === 0">
-        <td colspan="6" class="text-center">No hay datos. Revisa que el backend esté corriendo.</td>
-    </tr>
-</tbody>
+                        <td>{{ escuela.nombreDirector }}</td>
+                        
+                        <td style="white-space: nowrap;">
+                            <button class="btn btn-warning btn-sm btn-circle mr-2" 
+                                    title="Editar" 
+                                    data-toggle="modal" 
+                                    data-target="#modalAgregarEscuela" 
+                                    (click)="cargarDatosEdicion(escuela)">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm btn-circle" 
+                                    title="Eliminar" 
+                                    (click)="eliminar(escuela.id)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="listaEscuelas.length === 0">
+                        <td colspan="5" class="text-center text-muted">No hay registros cargados.</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- Modal para Registrar Nueva Escuela -->
-<div class="modal fade" id="modalAgregarEscuela" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalAgregarEscuela" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Nueva Escuela</h5>
+                <h5 class="modal-title">{{ esEdicion ? 'Editar Escuela' : 'Registrar Nueva Escuela' }}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-<form>
-    <!-- NIVEL (Select) -->
-    <div class="form-group">
-        <label>Nivel Educativo</label>
-        <!-- Aquí guardamos el texto "Primaria" temporalmente -->
-        <select class="form-control" [(ngModel)]="nuevaEscuela.nivelId" name="nivelId">
-            <option value="Preescolar">Preescolar</option>
-            <option value="Primaria">Primaria</option>
-            <option value="Secundaria">Secundaria</option>
-            <option value="Medio Superior">Medio Superior</option>
-            <option value="Superior">Superior</option>
-        </select>
-    </div>
+                <form (ngSubmit)="guardar()">
+                    
+                    <div class="form-group">
+                        <label class="font-weight-bold">Nivel Educativo</label>
+                        <select class="form-control" [(ngModel)]="nuevaEscuela.nivelId" name="nivelId">
+                            <option [ngValue]="1">Preescolar</option>
+                            <option [ngValue]="2">Primaria</option>
+                            <option [ngValue]="3">Secundaria</option>
+                            <option [ngValue]="4">Medio Superior</option>
+                            <option [ngValue]="5">Superior</option>
+                        </select>
+                    </div>
 
-    <!-- CCT (Usuario) -->
-    <div class="form-group">
-        <label>Clave CCT</label>
-        <!-- OJO: cctUsuario -->
-        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.cctUsuario" name="cctUsuario" required>
-    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Clave CCT</label>
+                        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.cctUsuario" name="cctUsuario" required>
+                    </div>
 
-    <!-- NOMBRE ESCUELA -->
-    <div class="form-group">
-        <label>Nombre de la Institución</label>
-        <!-- OJO: nombreEscuela -->
-        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreEscuela" name="nombreEscuela" required>
-    </div>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Nombre de la Institución</label>
+                        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreEscuela" name="nombreEscuela" required>
+                    </div>
 
-    <!-- DIRECTOR -->
-    <div class="form-group">
-        <label>Director Responsable</label>
-        <!-- OJO: nombreDirector -->
-        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreDirector" name="nombreDirector">
-    </div>
-</form>
-            <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cerrarModal">Cancelar</button>
-<button class="btn btn-primary" type="button" (click)="guardar()">Guardar</button>
+                    <div class="form-group">
+                        <label class="font-weight-bold">Nombre del Director</label>
+                        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreDirector" name="nombreDirector">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-weight-bold">Contraseña</label>
+                        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.password" name="password" placeholder="Por defecto: 123">
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cerrarModalBtn">Cancelar</button>
+                        <button class="btn btn-primary" type="submit">
+                            {{ esEdicion ? 'Actualizar Datos' : 'Guardar Registro' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
