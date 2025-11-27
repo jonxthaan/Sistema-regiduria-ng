@@ -1,4 +1,4 @@
-# SistemaRegiduriaNg
+# Sistema De Gestión de desfiles y eventos en Salina Cruz
 
 Sistema para Gestión de Desfiles, Convocatorias, Avisos y Logística en Mapa
 
