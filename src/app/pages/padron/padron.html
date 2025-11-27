@@ -37,33 +37,29 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    <tr>
-                        <td>20DPR1055X</td>
-                        <td>Esc. Primaria Benito Juárez</td>
-                        <td><span class="badge badge-danger">Primaria</span></td>
-                        <td>Prof. Juan Pérez</td>
-                        <td>*******</td>
-                        <td>
-                            <!-- Botón Editar: Se añade aria-label para accesibilidad (AXE) -->
-                            <button class="btn btn-warning btn-sm btn-circle mr-1" aria-label="Editar Escuela"><i class="fas fa-pen"></i></button>
-                            <!-- Botón Eliminar: Se añade aria-label para accesibilidad (AXE) -->
-                            <button class="btn btn-danger btn-sm btn-circle" aria-label="Eliminar Escuela"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>20DJN0234Y</td>
-                        <td>Jardín de Niños Luz y Saber</td>
-                        <td><span class="badge badge-primary">Preescolar</span></td>
-                        <td>Lic. María González</td>
-                        <td>*******</td>
-                        <td>
-                            <!-- Botón Editar: Se añade aria-label para accesibilidad (AXE) -->
-                            <button class="btn btn-warning btn-sm btn-circle mr-1" aria-label="Editar Escuela"><i class="fas fa-pen"></i></button>
-                            <!-- Botón Eliminar: Se añade aria-label para accesibilidad (AXE) -->
-                            <button class="btn btn-danger btn-sm btn-circle" aria-label="Eliminar Escuela"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
+    <tr *ngFor="let escuela of listaEscuelas">
+        <td>{{ escuela.cct }}</td>
+        <td>{{ escuela.nombreEscuela }}</td>
+        <td>
+            <span class="badge" 
+                  [class.badge-primary]="escuela.nivel == 'Preescolar'"
+                  [class.badge-danger]="escuela.nivel == 'Primaria'"
+                  [class.badge-success]="escuela.nivel == 'Secundaria'">
+                {{ escuela.nivel }}
+            </span>
+        </td>
+        <td>{{ escuela.director }}</td>
+        <td>*******</td>
+        <td>
+            <button class="btn btn-warning btn-sm btn-circle mr-1"><i class="fas fa-pen"></i></button>
+            <button class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i></button>
+        </td>
+    </tr>
+
+    <tr *ngIf="listaEscuelas.length === 0">
+        <td colspan="6" class="text-center">No hay escuelas registradas todavía.</td>
+    </tr>
+</tbody>
             </table>
         </div>
     </div>
@@ -81,34 +77,31 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label for="nivelEducativo">Nivel Educativo</label>
-                        <select class="form-control" id="nivelEducativo">
-                            <option>Preescolar</option>
-                            <option>Primaria</option>
-                            <option>Secundaria</option>
-                            <option>Medio Superior</option>
-                            <option>Superior</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cctClave">Clave CCT (Usuario)</label>
-                        <input type="text" class="form-control" id="cctClave" placeholder="Ej. 20DPR....">
-                    </div>
-                    <div class="form-group">
-                        <label for="nombreInstitucion">Nombre de la Institución</label>
-                        <input type="text" class="form-control" id="nombreInstitucion" placeholder="Nombre completo">
-                    </div>
-                    <div class="form-group">
-                        <label for="directorResponsable">Director Responsable</label>
-                        <input type="text" class="form-control" id="directorResponsable" placeholder="Nombre del Director">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                <button class="btn btn-primary" type="button">Guardar</button>
-            </div>
+    <div class="form-group">
+        <label>Nivel Educativo</label>
+        <select class="form-control" [(ngModel)]="nuevaEscuela.nivel" name="nivel">
+            <option>Preescolar</option>
+            <option>Primaria</option>
+            <option>Secundaria</option>
+            <option>Medio Superior</option>
+            <option>Superior</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Clave CCT</label>
+        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.cct" name="cct">
+    </div>
+    <div class="form-group">
+        <label>Nombre de la Institución</label>
+        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreEscuela" name="nombre">
+    </div>
+    <div class="form-group">
+        <label>Director Responsable</label>
+        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.director" name="director">
+    </div>
+</form>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cerrarModal">Cancelar</button>
+<button class="btn btn-primary" type="button" (click)="guardar()">Guardar</button>
         </div>
     </div>
 </div>

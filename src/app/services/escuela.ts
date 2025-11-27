@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class EscuelaService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/api/escuelas';
+  private apiUrl = 'http://localhost:8080/api/usuarios';
 
   // Obtener lista completa
   getEscuelas(): Observable<any[]> {
