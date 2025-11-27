@@ -14,11 +14,12 @@ export class Padron {
   listaEscuelas: any[] = [];
 
   nuevaEscuela = {
-    cct: "",
+    cctUsuario: "",
     nombreEscuela: "",
-    nivel: "Primaria",
-    director: "",
-    password: "123"
+    nivelId: "1",
+    nombreDirector: "",
+    password: "123",
+    rol: "escuela"
   }
 
   ngOnInit() {
@@ -29,14 +30,18 @@ export class Padron {
     this.escuelaService.getEscuelas().subscribe({
       next: (data) => {
         this.listaEscuelas = data;
-        console.log('Escuelas cargadas:', data);
+        console.log('Datos recibidos de Java:', data); // Revisa la consola del navegador
       },
-      error: (e) =>
-        console.error('Error al cargar escuelas:', e)
+      error: (e) => console.error('Error al cargar:', e)
     });
+  }
+  getNombreNivel(id: number): string {
+    const mapa: any = { 1: 'Preescolar', 2: 'Primaria', 3: 'Secundaria', 4: 'Medio Superior', 5: 'Superior' };
+    return mapa[id] || 'Desconocido';
   }
 
   guardar() {
+    const niveles: any = { 'Preescolar': 1, 'Primaria': 2, 'Secundaria': 3, 'Medio Superior': 4, 'Superior': 5 };
     this.escuelaService.crearEscuela(this.nuevaEscuela).subscribe({
       next: (data) => {
         alert('Escuela registrada con éxito');
@@ -49,6 +54,6 @@ export class Padron {
   }
 
   limpiarFormulario() {
-    this.nuevaEscuela = { cct: "", nombreEscuela: "", nivel: "Primaria", director: "", password: "123" };
+    this.nuevaEscuela = { cctUsuario: "", nombreEscuela: "", nivelId: "Primaria", nombreDirector: "", password: "123", rol: "Escuela" };
   }
   }

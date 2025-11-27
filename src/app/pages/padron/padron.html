@@ -25,39 +25,43 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <!-- El <tfoot> se incluye a menudo en plantillas Bootstrap/SB Admin 2 -->
-                <tfoot>
-                    <tr>
-                        <th>CCT</th>
-                        <th>Nombre Escuela</th>
-                        <th>Nivel</th>
-                        <th>Director</th>
-                        <th>Contraseña</th>
-                        <th>Acciones</th>
-                    </tr>
-                </tfoot>
                 <tbody>
     <tr *ngFor="let escuela of listaEscuelas">
-        <td>{{ escuela.cct }}</td>
+        <!-- Java manda 'cctUsuario', no 'cct' -->
+        <td>{{ escuela.cctUsuario }}</td>
+        
         <td>{{ escuela.nombreEscuela }}</td>
+        
         <td>
-            <span class="badge" 
-                  [class.badge-primary]="escuela.nivel == 'Preescolar'"
-                  [class.badge-danger]="escuela.nivel == 'Primaria'"
-                  [class.badge-success]="escuela.nivel == 'Secundaria'">
-                {{ escuela.nivel }}
+            <!-- Usamos la función helper para convertir el número en texto -->
+            <span class="badge"
+                  [class.badge-primary]="escuela.nivelId === 1"
+                  [class.badge-danger]="escuela.nivelId === 2"
+                  [class.badge-success]="escuela.nivelId === 3"
+                  [class.badge-info]="escuela.nivelId === 4"
+                  [class.badge-warning]="escuela.nivelId === 5">
+                {{ getNombreNivel(escuela.nivelId) }}
             </span>
         </td>
-        <td>{{ escuela.director }}</td>
+        
+        <!-- Java manda 'nombreDirector', no 'director' -->
+        <td>{{ escuela.nombreDirector }}</td>
+        
         <td>*******</td>
+        
         <td>
-            <button class="btn btn-warning btn-sm btn-circle mr-1"><i class="fas fa-pen"></i></button>
-            <button class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-warning btn-sm btn-circle mr-1" title="Editar">
+                <i class="fas fa-pen"></i>
+            </button>
+            <button class="btn btn-danger btn-sm btn-circle" title="Eliminar">
+                <i class="fas fa-trash"></i>
+            </button>
         </td>
     </tr>
 
+    <!-- Mensaje vacío -->
     <tr *ngIf="listaEscuelas.length === 0">
-        <td colspan="6" class="text-center">No hay escuelas registradas todavía.</td>
+        <td colspan="6" class="text-center">No hay datos. Revisa que el backend esté corriendo.</td>
     </tr>
 </tbody>
             </table>
@@ -76,28 +80,39 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+<form>
+    <!-- NIVEL (Select) -->
     <div class="form-group">
         <label>Nivel Educativo</label>
-        <select class="form-control" [(ngModel)]="nuevaEscuela.nivel" name="nivel">
-            <option>Preescolar</option>
-            <option>Primaria</option>
-            <option>Secundaria</option>
-            <option>Medio Superior</option>
-            <option>Superior</option>
+        <!-- Aquí guardamos el texto "Primaria" temporalmente -->
+        <select class="form-control" [(ngModel)]="nuevaEscuela.nivelId" name="nivel">
+            <option value="Preescolar">Preescolar</option>
+            <option value="Primaria">Primaria</option>
+            <option value="Secundaria">Secundaria</option>
+            <option value="Medio Superior">Medio Superior</option>
+            <option value="Superior">Superior</option>
         </select>
     </div>
+
+    <!-- CCT (Usuario) -->
     <div class="form-group">
         <label>Clave CCT</label>
-        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.cct" name="cct">
+        <!-- OJO: cctUsuario -->
+        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.cctUsuario" name="cctUsuario" required>
     </div>
+
+    <!-- NOMBRE ESCUELA -->
     <div class="form-group">
         <label>Nombre de la Institución</label>
-        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreEscuela" name="nombre">
+        <!-- OJO: nombreEscuela -->
+        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreEscuela" name="nombreEscuela" required>
     </div>
+
+    <!-- DIRECTOR -->
     <div class="form-group">
         <label>Director Responsable</label>
-        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.director" name="director">
+        <!-- OJO: nombreDirector -->
+        <input type="text" class="form-control" [(ngModel)]="nuevaEscuela.nombreDirector" name="nombreDirector">
     </div>
 </form>
             <button class="btn btn-secondary" type="button" data-dismiss="modal" id="cerrarModal">Cancelar</button>
